@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Ocaso · Fragancias</title>
+<!-- Tipografías: Playfair Display (títulos, como en el folleto) + Jost (texto fino con letras separadas) -->
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+/* ===== 1. COLORES (estilo del folleto: marfil, dorado y negro) ===== */
+:root{
+  --marfil:#F6EFE4;  /* fondo claro */
+  --negro:#15110E;   /* secciones oscuras y botones */
+  --texto:#1A1612;   /* texto sobre fondo claro */
+  --oro:#B8832F;     /* dorado principal (líneas, precios) */
+  --oro2:#E0B467;    /* dorado claro (sobre fondo oscuro) */
+  --serif:'Playfair Display',Georgia,serif;
+  --sans:'Jost',system-ui,sans-serif;
+}
+*{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth;scroll-padding-top:64px}
+body{background:var(--marfil);color:var(--texto);font:300 1.05rem/1.7 var(--sans)}
+h1,h2,h3{font-family:var(--serif);line-height:1.05}
+section,.in{max-width:1100px;margin:auto;padding:4.5rem 1.25rem}
+.oscuro{background:var(--negro);color:var(--marfil)}
+.oscuro h2{color:var(--oro2)}
+h2{font-size:clamp(2rem,5vw,3rem)}
+.sub{opacity:.75;max-width:58ch;margin:.6rem 0 1.5rem}
+button,a.btn{font:500 .95rem var(--sans);cursor:pointer;border:0;border-radius:99px;padding:.7rem 1.5rem;background:var(--negro);color:var(--marfil);text-decoration:none;display:inline-block;transition:.2s}
+button:hover,a.btn:hover{background:var(--oro);color:#fff}
+:focus-visible{outline:2px solid var(--oro);outline-offset:3px}
+/* línea dorada con rombo, como en el folleto */
+.div{display:flex;align-items:center;gap:.8rem;margin:1rem 0 1.4rem}
+.div::before,.div::after{content:"";flex:1;height:1px;background:var(--oro)}
+.div i{width:10px;height:10px;background:var(--oro);transform:rotate(45deg)}
+
+/* ===== 2. MENÚ ===== */
+nav{position:sticky;top:0;z-index:9;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.5rem;padding:.7rem 1.25rem;background:rgba(246,239,228,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--oro)}
+nav b{font:800 1.4rem var(--serif);letter-spacing:.15em}
+nav div{display:flex;gap:1rem;flex-wrap:wrap;font-size:.9rem}
+nav a{color:var(--texto);text-decoration:none}
+nav a:hover{color:var(--oro)}
+
+/* ===== 3. VITRINA: panel oscuro con frascos (parecido a la foto del folleto) ===== */
+.vit{position:relative;min-height:360px;overflow:hidden;border:1px solid var(--oro);display:flex;align-items:flex-end;justify-content:center;gap:1rem;padding:0 1rem 64px;background:radial-gradient(circle at 75% 85%,rgba(224,180,103,.45),transparent 55%),linear-gradient(160deg,#3a2e22,#0f0c09)}
+.vit::after{content:"";position:absolute;left:0;right:0;bottom:0;height:56px;background:linear-gradient(180deg,#8d857b,#3b3631)}
+.vit svg{position:relative;z-index:1}
+.vit svg:first-child{width:105px;opacity:.9}
+.vit svg:last-child{width:145px}
+
+/* ===== 4. INICIO ===== */
+#inicio{display:grid;grid-template-columns:1.1fr 1fr;gap:2.5rem;align-items:center;min-height:84vh}
+#inicio h1{font-size:clamp(3.8rem,13vw,8.5rem);font-weight:800}
+.t{letter-spacing:.55em;text-transform:uppercase;color:var(--oro);font-size:clamp(1rem,2.6vw,1.6rem);font-weight:300}
+#inicio p{margin:1.4rem 0 2rem;max-width:36ch;font-size:1.15rem}
+
+/* ===== 5. CATÁLOGO (lista como el folleto) ===== */
+.cat{display:grid;grid-template-columns:1.5fr 1fr;gap:2rem;align-items:start}
+.carta{border:1px solid var(--oro);box-shadow:inset 0 0 0 7px var(--marfil),inset 0 0 0 8px var(--oro);padding:2.4rem 1.8rem}
+.carta h2{font-size:clamp(2.4rem,7vw,4rem);font-weight:800;text-transform:uppercase}
+.carta h2 span{display:block;font:300 clamp(1.2rem,3.5vw,2rem) var(--sans);letter-spacing:.4em;color:var(--oro)}
+.tabs,.fams{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:.8rem}
+.tabs button,.fams button{background:transparent;color:var(--texto);border:1px solid var(--oro);padding:.4rem 1rem;font-size:.85rem}
+.tabs button.on,.fams button.on{background:var(--oro);color:#fff}
+.grupo{font:300 1.3rem var(--sans);letter-spacing:.35em;color:var(--oro);text-align:center;margin:1.6rem 0 .4rem;text-transform:uppercase}
+ul{list-style:none;padding:0}
+.fila{display:grid;grid-template-columns:14px 1fr auto;gap:0 .8rem;width:100%;text-align:left;background:none;color:var(--texto);border-radius:0;padding:.6rem .3rem;border-bottom:1px solid rgba(184,131,47,.25)}
+.fila:hover{background:rgba(184,131,47,.12);color:var(--texto)}
+.punto{width:10px;height:10px;border-radius:50%;background:var(--oro);align-self:center;grid-row:1/3}
+.fila b{grid-column:2;font-weight:600;text-transform:uppercase;letter-spacing:.03em}
+.fila span{grid-column:2;text-transform:uppercase;font-size:.9rem;opacity:.85}
+.fila small{color:var(--oro);text-transform:none;font-size:.8rem}
+.fila em{grid-row:1/3;grid-column:3;font:500 1.15rem var(--sans);font-style:normal;color:var(--oro);align-self:center}
+.nota{font-size:.85rem;opacity:.7;margin-top:1rem}
+
+/* ===== 6. PIRÁMIDE ===== */
+.chips{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:2rem}
+.chips button{background:transparent;color:var(--marfil);border:1px solid var(--oro2);padding:.4rem 1.2rem}
+.chips button.on{background:var(--oro2);color:var(--negro)}
+.piramide{display:grid;grid-template-columns:1fr 1fr;gap:2rem;align-items:center}
+.nivel{margin:0 auto 6px;padding:1rem .5rem;text-align:center;color:var(--negro)}
+.nivel b{display:block;font:700 1.15rem var(--serif)}
+.n1{width:45%;clip-path:polygon(25% 0,75% 0,100% 100%,0 100%);background:#F1DDB0}
+.n2{width:72%;clip-path:polygon(17% 0,83% 0,100% 100%,0 100%);background:var(--oro2)}
+.n3{width:100%;clip-path:polygon(14% 0,86% 0,100% 100%,0 100%);background:#8A6120;color:var(--marfil)}
+.info p{margin-bottom:1rem}
+.info strong{color:var(--oro2)}
+
+/* ===== 7. TEST ===== */
+.caja{background:#fff;border:1px solid var(--oro);padding:2rem;max-width:640px}
+.barra{height:5px;background:rgba(184,131,47,.2);margin-bottom:1.5rem}
+.barra i{display:block;height:100%;width:0;background:var(--oro);transition:width .4s}
+.op{display:grid;gap:.7rem;margin-top:1.2rem}
+.op button{background:var(--marfil);color:var(--texto);text-align:left;border-radius:4px;border:1px solid rgba(184,131,47,.45)}
+.op button:hover{background:var(--oro);color:#fff}
+.res{display:grid;gap:.5rem;margin-top:1rem}
+
+/* ===== 8. LÍNEA DE TIEMPO ===== */
+.linea{border-left:1px solid var(--oro2);margin-left:.6rem;padding-left:1.8rem}
+.paso{position:relative;margin-bottom:2rem}
+.paso::before{content:"";position:absolute;left:-2.3rem;top:.5rem;width:11px;height:11px;background:var(--oro2);transform:rotate(45deg)}
+.paso h3{font-size:1.5rem}
+
+/* ===== 9. CONTACTO ===== */
+.dos{display:grid;grid-template-columns:1fr 1fr;gap:2.5rem}
+form{display:grid;gap:.8rem}
+input,textarea{font:inherit;background:#fff;color:var(--texto);border:1px solid var(--oro);padding:.7rem}
+textarea{min-height:110px}
+#ok{color:var(--oro);min-height:1.5em}
+footer{background:var(--negro);color:var(--marfil);text-align:center;padding:2rem 1rem;font-size:.8rem;opacity:.9}
+
+/* ===== 10. APARECER AL HACER SCROLL ===== */
+.js .rv{opacity:0;transform:translateY(24px);transition:opacity .8s,transform .8s}
+.js .rv.on{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}.js .rv{opacity:1;transform:none}}
+
+/* ===== DETALLE SUTIL DEL INICIO ===== */
+.detalle{display:flex;align-items:center;gap:.7rem;margin-top:2.4rem;font-size:.78rem;letter-spacing:.32em;text-transform:uppercase;color:var(--oro)}
+.detalle::before{content:"";width:34px;height:1px;background:var(--oro)}
+
+/* ===== ELEGIR VARIOS PERFUMES ===== */
+.fila.sel{background:rgba(184,131,47,.18)}
+.fila.sel .punto{background:var(--negro);box-shadow:0 0 0 3px var(--marfil),0 0 0 4px var(--oro)}
+.res button.sel{background:var(--oro);color:#fff}
+#barraSel{position:fixed;left:50%;bottom:14px;transform:translateX(-50%);z-index:20;display:none;align-items:center;justify-content:center;flex-wrap:wrap;gap:.6rem;background:var(--negro);color:var(--marfil);border:1px solid var(--oro);border-radius:99px;padding:.5rem .6rem .5rem 1.2rem;font-size:.9rem;box-shadow:0 6px 24px rgba(0,0,0,.35);max-width:calc(100% - 1.5rem)}
+#barraSel.on{display:flex}
+#barraSel button{padding:.45rem 1.1rem;background:var(--oro);color:#fff}
+#barraSel button.sec{background:transparent;color:var(--marfil);border:1px solid var(--oro2)}
+
+/* ===== PÁGINAS: se muestra una sola sección a la vez ===== */
+.pag:not(.act){display:none!important}
+.pag{min-height:70vh}
+nav div a.on{color:var(--oro);border-bottom:1px solid var(--oro)}
+
+/* ===== 11. CELULAR ===== */
+@media(max-width:760px){
+  #inicio,.cat,.piramide,.dos{grid-template-columns:1fr}
+  .carta{padding:2rem 1.1rem}
+  section,.in{padding:3.2rem 1.25rem}
+}
+</style>
+</head>
+<body>
+
+<nav><a href="#inicio"><b>OCASO</b></a>
+  <div><a href="#inicio">Inicio</a><a href="#catalogo">Catálogo</a><a href="#piramide">Pirámide</a><a href="#test">Test</a><a href="#proceso">Cómo se hace</a><a href="#contacto">Contacto</a></div>
+</nav>
+
+<!-- INICIO -->
+<section id="inicio" class="pag">
+  <div>
+    <h1>OCASO</h1><span class="t">Fragancias</span>
+    <p>Una selección de perfumes masculinos y unisex para cada estilo.</p>
+    <a class="btn" href="#catalogo">Ver el catálogo</a>
+    <div class="detalle" id="detalle"></div>
+  </div>
+  <div class="vit"></div>
+</section>
+
+<!-- CATÁLOGO -->
+<section id="catalogo" class="pag rv">
+  <div class="cat">
+    <div class="carta">
+      <h2>Fragancias<span id="sub"></span></h2>
+      <div class="div"><i></i></div>
+      <div class="tabs" id="tabs"></div><div class="fams" id="fams"></div>
+      <div id="lista"></div>
+      <p class="nota">Tocá uno o más perfumes para elegirlos y después tocá «Consultar». La familia olfativa es aproximada.</p>
+    </div>
+    <div class="vit"></div>
+  </div>
+</section>
+
+<!-- PIRÁMIDE -->
+<div class="oscuro pag" id="piramide"><div class="in rv">
+  <h2>La pirámide olfativa</h2>
+  <p class="sub">Un perfume no huele igual todo el tiempo: se despliega en tres capas. Elegí una familia y mirá qué ingredientes son típicos de cada capa.</p>
+  <div class="chips" id="chips"></div>
+  <div class="piramide">
+    <div id="pir"></div>
+    <div class="info">
+      <p><strong>Salida:</strong> lo primero que sentís al rociar. Ingredientes livianos que se evaporan rápido (unos 15 a 30 minutos).</p>
+      <p><strong>Corazón:</strong> el carácter real del perfume. Aparece cuando la salida se va y dura unas horas.</p>
+      <p><strong>Fondo:</strong> los ingredientes más pesados. Aparecen más tarde, fijan el aroma y pueden quedar 6 horas o más.</p>
+      <p style="font-size:.85rem;opacity:.7">Son ejemplos típicos de cada familia, no las notas de un perfume en particular. Los tiempos son aproximados.</p>
+    </div>
+  </div>
+</div></div>
+
+<!-- TEST -->
+<section id="test" class="pag rv">
+  <h2>¿Qué perfume va con vos?</h2>
+  <p class="sub">Cinco preguntas rápidas. Respondé lo primero que sientas.</p>
+  <div class="caja"><div class="barra"><i id="prog"></i></div><div id="testBox"></div></div>
+</section>
+
+<!-- CÓMO SE HACE -->
+<div class="oscuro pag" id="proceso"><div class="in rv">
+  <h2>Cómo se hace un perfume</h2>
+  <p class="sub">De la flor al frasco: cinco pasos reales.</p>
+  <div class="linea">
+    <div class="paso"><h3>Extracción</h3><p>Se obtiene el aroma de las materias primas. Con la destilación por vapor, el vapor arrastra las moléculas aromáticas y al enfriarse deja un aceite esencial. Los cítricos se prensan. Las flores delicadas, como el jazmín, se tratan con solventes porque el calor las arruinaría.</p></div>
+    <div class="paso"><h3>Mezcla</h3><p>El perfumista (la “nariz”) crea la fórmula y mezcla los ingredientes en proporciones exactas, naturales y sintéticos. Ese concentrado se diluye en alcohol de alta pureza.</p></div>
+    <div class="paso"><h3>Maceración</h3><p>La mezcla reposa en tanques, como un vino, desde varias semanas hasta meses. Así los ingredientes se integran y el aroma queda redondo y estable.</p></div>
+    <div class="paso"><h3>Filtrado</h3><p>Se enfría el perfume y se filtra para sacar los depósitos que se forman. Así queda transparente y no se enturbia con el frío.</p></div>
+    <div class="paso"><h3>Envasado</h3><p>Se llena el frasco, se sella y se etiqueta, después de controlar que el aroma, el color y la calidad coincidan con la muestra aprobada.</p></div>
+  </div>
+</div></div>
+
+<!-- CONTACTO -->
+<section id="contacto" class="pag rv">
+  <div class="dos">
+    <div>
+      <h2>Sobre Ocaso</h2>
+      <p style="margin-top:1rem">Ocaso nació de una idea simple: el atardecer es el momento en que el día cambia de color, y un perfume puede hacer lo mismo con tu ánimo.</p>
+      <p style="margin-top:1rem">Seleccionamos fragancias muy pedidas y te contamos cómo son, para que sepas qué elegir.</p>
+    </div>
+    <form id="form">
+      <h3 style="font-size:1.8rem">Escribinos</h3>
+      <input id="nom" placeholder="Tu nombre" required>
+      <input type="email" placeholder="Tu email" required>
+      <textarea id="msg" placeholder="Contanos qué perfume te interesa" required></textarea>
+      <button type="submit">Enviar mensaje</button>
+      <p id="ok" aria-live="polite"></p>
+    </form>
+  </div>
+</section>
+
+<div id="barraSel" aria-live="polite"><span id="selTxt"></span><button id="selIr">Consultar</button><button class="sec" id="selVaciar">Vaciar</button></div>
+
+<footer>© Ocaso · Las marcas mencionadas son propiedad de sus respectivos dueños y Ocaso no está afiliado a ellas · Familias basadas en la rueda de Michael Edwards (Fragrances of the World)</footer>
+
+<script>
+document.documentElement.classList.add('js');
+const $ = id => document.getElementById(id);
+
+/* ===== A. DATOS: acá agregás o cambiás perfumes =====
+   [marca, nombre, precio, categoría ("m"=masculino, "u"=unisex), familia ("r"=fresco, "a"=amaderado, "o"=oriental, ""=sin confirmar)] */
+const FAM = {r:"Fresco", a:"Amaderado", o:"Oriental"};
+const P = [
+ ["Azzaro","The Most Wanted",40000,"m","o"],
+ ["Bharara","Bharara King",40000,"m",""],
+ ["Chanel","Allure Sport",45000,"m","r"],
+ ["Chanel","Bleu de Chanel",45000,"m","a"],
+ ["Christian Dior","Dior Homme Intense",45000,"m","a"],
+ ["Creed","Aventus Absolu",45000,"m",""],
+ ["Giorgio Armani","Stronger With You Intense",40000,"m","o"],
+ ["Issey Miyake","L'Eau d'Issey",40000,"m","r"],
+ ["J.P. Gaultier","Le Male Elixir",40000,"m","o"],
+ ["J.P. Gaultier","Paradise Garden",40000,"m",""],
+ ["J.P. Gaultier","Scandal Pour Homme Absolu",40000,"m",""],
+ ["Louis Vuitton","Nuit de Feu",45000,"m",""],
+ ["Louis Vuitton","Ombre Nomade",45000,"m","o"],
+ ["Paco Rabanne","Invictus Victory Elixir",40000,"m","o"],
+ ["Tom Ford","Ombre Leather",45000,"m",""],
+ ["Valentino","Born in Roma",45000,"m","a"],
+ ["Valentino","Born in Roma Extradose",45000,"m",""],
+ ["Valentino","Born in Roma Intense",45000,"m",""],
+ ["Maison Francis Kurkdjian","Baccarat Rouge 540",45000,"u","o"], // el precio no se veía en el folleto: confirmalo
+ ["Montale","Arabians Tonka",45000,"u","o"],
+ ["Xerjoff","Erba Pura",45000,"u",""]
+].map(([marca,nombre,precio,cat,fam]) => ({marca,nombre,precio,cat,fam}));
+const pesos = n => "$" + n.toLocaleString("es-AR");
+
+/* ===== B. FRASCO SVG: vidrio oscuro con tapa negra texturada o dorada ===== */
+function botella(n, dorada){
+  const tapa = dorada ? `url(#d${n})` : `#15110E`;
+  return `<svg viewBox="0 0 120 170" aria-hidden="true"><defs>
+  <linearGradient id="d${n}" x1="0" x2="1"><stop offset="0" stop-color="#B8832F"/><stop offset=".5" stop-color="#F3D79A"/><stop offset="1" stop-color="#8A6120"/></linearGradient>
+  <linearGradient id="l${n}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#26335F"/><stop offset=".72" stop-color="#090B16"/><stop offset="1" stop-color="#8A5514"/></linearGradient>
+  <pattern id="p${n}" width="4" height="4" patternUnits="userSpaceOnUse"><path d="M0 4L4 0" stroke="#4A4036" stroke-width="1"/></pattern></defs>
+  <rect x="40" y="4" width="40" height="30" rx="3" fill="${tapa}"/>${dorada?'':`<rect x="40" y="4" width="40" height="30" rx="3" fill="url(#p${n})"/>`}
+  <rect x="36" y="34" width="48" height="7" fill="url(#d${n})"/>
+  <rect x="14" y="41" width="92" height="124" rx="10" fill="#0b0a12" stroke="#E0B467" stroke-opacity=".5"/>
+  <rect x="22" y="52" width="76" height="106" rx="6" fill="url(#l${n})"/>
+  <rect x="27" y="58" width="6" height="92" rx="3" fill="#fff" fill-opacity=".2"/>
+  <rect x="40" y="98" width="42" height="1" fill="#E0B467" fill-opacity=".7"/></svg>`;
+}
+document.querySelectorAll('.vit').forEach((v,i) => v.innerHTML = botella('a'+i,true) + botella('b'+i,false));
+
+/* ===== C. CATÁLOGO: lista con filtros por categoría y por familia ===== */
+let cat = "t", fam = "";
+function dibujar(){
+  $('tabs').innerHTML = [["t","Todas"],["m","Masculinas"],["u","Unisex"]].map(([k,v]) =>
+    `<button class="${k==cat?'on':''}" onclick="cat='${k}';dibujar()">${v}</button>`).join('');
+  $('fams').innerHTML = [["","Todas las familias"],...Object.entries(FAM)].map(([k,v]) =>
+    `<button class="${k==fam?'on':''}" onclick="fam='${k}';dibujar()">${v}</button>`).join('');
+  $('sub').textContent = {t:"El catálogo", m:"Masculinas", u:"Unisex"}[cat];
+  let h = "";
+  [["m","Masculinas"],["u","Unisex"]].forEach(([c,titulo]) => {
+    const l = P.map((p,i) => [p,i]).filter(([p]) => (cat=="t"||cat==c) && p.cat==c && (!fam||p.fam==fam));
+    if(l.length) h += (cat=="t" ? `<p class="grupo">${titulo}</p>` : "") + "<ul>" + l.map(([p,i]) =>
+      `<li><button class="fila${sel.has(i)?' sel':''}" aria-pressed="${sel.has(i)}" onclick="elegir(${i})"><i class="punto"></i><b>${p.marca}</b>
+       <span>${p.nombre}${p.fam ? ` <small>· ${FAM[p.fam]}</small>` : ""}</span><em>${pesos(p.precio)}</em></button></li>`).join('') + "</ul>";
+  });
+  $('lista').innerHTML = h || "<p style='margin-top:1rem'>No hay perfumes de esa familia todavía.</p>";
+}
+
+/* ===== D. PIRÁMIDE: ingredientes típicos por familia ===== */
+const PIR = {
+ r:{s:["Limón","Bergamota","Menta"], c:["Lavanda","Notas acuáticas*"], f:["Almizcle","Madera ligera"]},
+ a:{s:["Bergamota","Pimienta"], c:["Cedro","Iris"], f:["Sándalo","Vetiver","Pachulí"]},
+ o:{s:["Cardamomo","Mandarina"], c:["Rosa","Canela"], f:["Vainilla","Ámbar","Haba tonka"]}
+};
+let fp = "r";
+function dibujarPir(){
+  $('chips').innerHTML = Object.entries(FAM).map(([k,v]) => `<button class="${k==fp?'on':''}" onclick="fp='${k}';dibujarPir()">${v}</button>`).join('');
+  const x = PIR[fp];
+  $('pir').innerHTML = `<div class="nivel n1"><b>Salida</b>${x.s.join(", ")}</div><div class="nivel n2"><b>Corazón</b>${x.c.join(", ")}</div><div class="nivel n3"><b>Fondo</b>${x.f.join(", ")}</div>`
+   + (fp=="r" ? `<p style="font-size:.8rem;opacity:.7;margin-top:.6rem">*Las notas acuáticas suelen ser recreaciones, no extractos de mar.</p>` : "");
+}
+
+/* ===== E. TEST: cada respuesta suma a una familia (r, a, o) ===== */
+const Q = [
+ ["¿Qué plan elegís para un sábado?",[["Caminar por el bosque","a"],["Playa o pileta","r"],["Cena larga con amigos","o"],["Salir a correr o hacer deporte","r"]]],
+ ["Elegí un color:",[["Azul claro","r"],["Marrón madera","a"],["Dorado o bordó","o"],["Verde oscuro","a"]]],
+ ["¿Cuál es tu estación favorita?",[["Verano","r"],["Otoño","a"],["Invierno","o"],["Primavera","r"]]],
+ ["¿Cómo te gustaría que te recuerden?",[["Con energía y frescura","r"],["Con calma y seguridad","a"],["Con misterio y presencia","o"],["Con elegancia clásica","a"]]],
+ ["Elegí algo para tomar:",[["Agua con hielo y menta","r"],["Té negro o café","a"],["Chocolate caliente con canela","o"],["Limonada","r"]]]
+];
+const DESC = {r:"Limpio, ligero y lleno de energía.", a:"Elegante, cálido y seguro.", o:"Intenso, dulce y con mucha presencia."};
+let paso = 0, pt = {};
+function testVer(){
+  $('prog').style.width = (paso/Q.length*100) + "%";
+  if(paso >= Q.length){
+    const g = Object.keys(pt).sort((x,y) => pt[y]-pt[x])[0];
+    const sug = P.map((p,i) => [p,i]).filter(([p]) => p.fam==g).slice(0,3);
+    $('testBox').innerHTML = `<h3 style="font-size:2rem">Tu perfil: ${FAM[g]}</h3><p style="margin:.6rem 0">${DESC[g]} Te recomendamos:</p>
+      <div class="res">${sug.map(([p,i]) => `<button class="${sel.has(i)?'sel':''}" onclick="elegir(${i})">${sel.has(i)?'✓ ':''}${p.marca} · ${p.nombre} · ${pesos(p.precio)}</button>`).join('')}
+      <button style="background:transparent;color:var(--texto);border:1px solid var(--oro)" onclick="paso=0;pt={};testVer()">Repetir test</button></div>`;
+    return;
+  }
+  const [q,o] = Q[paso];
+  $('testBox').innerHTML = `<h3 style="font-size:1.6rem">${paso+1}. ${q}</h3><div class="op">` +
+    o.map(([t,k]) => `<button onclick="pt['${k}']=(pt['${k}']||0)+1;paso++;testVer()">${t}</button>`).join('') + "</div>";
+}
+
+/* ===== F. ELEGIR VARIOS PERFUMES + CONTACTO (formulario solo visual) ===== */
+const sel = new Set();   // perfumes elegidos (guarda la posición dentro de P)
+let autoMsg = "";        // último mensaje armado solo, para no pisar lo que escribas
+function elegir(i){
+  sel.has(i) ? sel.delete(i) : sel.add(i);
+  dibujar(); testVer(); barra();
+}
+function barra(){
+  const n = sel.size, act = document.querySelector('.pag.act');
+  $('selTxt').textContent = n + (n == 1 ? " perfume elegido" : " perfumes elegidos");
+  $('barraSel').classList.toggle('on', n > 0 && (!act || act.id != 'contacto'));
+}
+function armarMsg(){
+  if(!sel.size) return;
+  const l = [...sel].sort((x,y) => x-y).map(i => P[i]);
+  const total = l.reduce((t,p) => t + p.precio, 0);
+  const t = (l.length > 1 ? "Hola, me interesan estos perfumes:\n" : "Hola, me interesa este perfume:\n")
+    + l.map(p => `- ${p.marca} ${p.nombre} (${pesos(p.precio)})`).join("\n")
+    + (l.length > 1 ? `\nTotal: ${pesos(total)}` : "");
+  if(!$('msg').value || $('msg').value == autoMsg){ $('msg').value = t; autoMsg = t; }
+}
+$('selIr').onclick = () => { irA('contacto'); $('nom').focus(); };
+$('selVaciar').onclick = () => { sel.clear(); dibujar(); testVer(); barra(); };
+$('form').addEventListener('submit', e => {
+  e.preventDefault();
+  $('ok').textContent = "¡Gracias! Tu mensaje quedó listo (este formulario es solo de muestra).";
+  e.target.reset(); sel.clear(); autoMsg = ""; dibujar(); testVer(); barra();
+});
+
+/* ===== G. APARECER AL HACER SCROLL ===== */
+const obs = new IntersectionObserver(es => es.forEach(x => { if(x.isIntersecting){ x.target.classList.add('on'); obs.unobserve(x.target); } }), {threshold:.1});
+document.querySelectorAll('.rv').forEach(el => obs.observe(el));
+
+/* ===== H. NAVEGACIÓN: una sección a la vez, tocando las palabras del menú ===== */
+const PAGS = ['inicio','catalogo','piramide','test','proceso','contacto'];
+function ir(id){
+  if(!PAGS.includes(id)) id = 'inicio';
+  PAGS.forEach(p => $(p).classList.toggle('act', p == id));
+  document.querySelectorAll('nav div a').forEach(a => a.classList.toggle('on', a.getAttribute('href') == '#' + id));
+  if(id == 'contacto') armarMsg();
+  barra();
+  window.scrollTo(0, 0);
+  const el = $(id);   // asegura que la sección aparezca (efecto suave)
+  requestAnimationFrame(() => { el.classList.add('on'); el.querySelectorAll('.rv').forEach(x => x.classList.add('on')); });
+}
+function irA(id){ ir(id); try{ history.pushState(null, '', '#' + id); }catch(e){} }
+// cualquier link que empiece con # (menú, logo, botón del inicio) cambia de sección
+document.addEventListener('click', e => {
+  const a = e.target.closest('a[href^="#"]');
+  if(!a) return;
+  e.preventDefault();
+  irA(a.getAttribute('href').slice(1));
+});
+window.addEventListener('popstate', () => ir(location.hash.slice(1)));
+window.addEventListener('hashchange', () => ir(location.hash.slice(1)));
+
+$('detalle').textContent = P.length + " fragancias · masculinas y unisex";
+dibujar(); dibujarPir(); testVer(); ir(location.hash.slice(1));
+</script>
+</body>
+</html>
